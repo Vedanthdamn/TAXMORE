@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ApiError, calculateTax } from "./api";
+import { ComparisonView } from "./components/ComparisonView";
 import { SalaryForm } from "./components/SalaryForm";
 import { StatusBanner } from "./components/StatusBanner";
 import type { RegimeComparison, SalaryInput } from "./types";
@@ -33,9 +34,7 @@ function App() {
 
       <StatusBanner loading={loading} loadingText="Comparing regimes..." error={error} />
 
-      {comparison && !loading && !error && (
-        <pre className="raw-result">{JSON.stringify(comparison, null, 2)}</pre>
-      )}
+      {comparison && !loading && !error && <ComparisonView comparison={comparison} />}
     </main>
   );
 }
