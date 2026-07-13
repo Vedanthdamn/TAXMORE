@@ -1,0 +1,53 @@
+{
+  "fy": "2025-26",
+  "sources": {
+    "new_regime_slabs": "finance_act_2025_slabs_circular.pdf, section 202(1) table (\"New tax regime for individuals, Hindu undivided family and others\")",
+    "standard_deduction": "finance_act_2025_slabs_circular.pdf, section 19(1) Table Sl. No. 2",
+    "rebate_87A": "finance_act_2025_slabs_circular.pdf, sections 155-156 (\"Rebate to be allowed in computing income-tax\" / \"Rebate of income-tax in case of certain individuals\"); cross-checked against income_tax_act_1961_relevant_section.pdf, section 87A"
+  },
+  "new_regime": {
+    "slabs": [
+      { "up_to": 400000, "rate_pct": 0 },
+      { "from": 400001, "up_to": 800000, "rate_pct": 5 },
+      { "from": 800001, "up_to": 1200000, "rate_pct": 10 },
+      { "from": 1200001, "up_to": 1600000, "rate_pct": 15 },
+      { "from": 1600001, "up_to": 2000000, "rate_pct": 20 },
+      { "from": 2000001, "up_to": 2400000, "rate_pct": 25 },
+      { "from": 2400001, "up_to": null, "rate_pct": 30 }
+    ],
+    "standard_deduction": {
+      "amount": 75000,
+      "rule": "Rs. 75,000 or the salary, whichever is less"
+    },
+    "rebate_87A": {
+      "income_limit": 1200000,
+      "max_rebate": 60000,
+      "rule": "100% of income-tax payable or Rs. 60,000, whichever is less, if total income does not exceed Rs. 12,00,000",
+      "marginal_relief": {
+        "applies_when": "total income exceeds Rs. 12,00,000 and income-tax payable on such total income exceeds the amount by which total income exceeds Rs. 12,00,000",
+        "rule": "rebate = income-tax payable minus (total income - Rs. 12,00,000), so that the incremental tax on income above Rs. 12,00,000 never exceeds the incremental income above Rs. 12,00,000",
+        "cap": "the combined deduction under this rule cannot exceed the income-tax payable at the section 202(1) slab rates"
+      }
+    }
+  },
+  "old_regime": {
+    "slabs": null,
+    "standard_deduction": {
+      "amount": 50000,
+      "rule": "Rs. 50,000 or the salary, whichever is less, in any case other than new-regime computation"
+    },
+    "rebate_87A": {
+      "income_limit": 500000,
+      "max_rebate": 12500,
+      "rule": "An individual resident in India, whose total income does not exceed Rs. 5,00,000, is entitled to a deduction of 100% of income-tax payable or Rs. 12,500, whichever is less",
+      "marginal_relief": null
+    }
+  },
+  "cess": null,
+  "unresolved": [
+    "Old-regime slab table (the income brackets/rates for individuals who do NOT opt into the new regime) is not present in either source PDF. income_tax_act_1961_relevant_section.pdf never carries rate schedules (rates are always fixed by the annual Finance Act's First Schedule, not the Act itself), and finance_act_2025_slabs_circular.pdf only contains the new-regime table under section 202. Do not assume the commonly-cited 2.5L/5L/10L old-regime slabs without an authoritative source.",
+    "Health and Education Cess rate is not stated anywhere in either PDF (search for 'cess' only turns up unrelated definitions of 'maximum marginal rate' and generic references to 'tax, duty, cess or fee'). Do not hardcode 4% without confirming against a source.",
+    "Surcharge rates/thresholds for individuals are not present in either PDF.",
+    "finance_act_2025_slabs_circular.pdf is not literally a 'circular' - its section numbering (199-209, Chapter references, footnotes citing 'Finance Act, 2026, w.e.f. 1-4-2026') indicates it is full or near-full text of the new Income-tax Act, 2025, which restructures section numbers relative to the 1961 Act. The FY2025-26 applicability of this specific numbering should be verified against the Act's actual commencement provisions before relying on section citations (155/156/202/etc.) in user-facing content."
+  ]
+}

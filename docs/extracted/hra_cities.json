@@ -1,0 +1,8 @@
+{
+  "UNVERIFIED": true,
+  "note": "Rule 2A of the Income-tax Rules, 1962 (which sets the 40%/50%-of-salary HRA exemption formula and the metro city list) is not part of either source PDF in docs/source-pdfs - both PDFs contain Act text only, not the Rules. This file was populated from general public knowledge at the user's explicit direction, not extracted from the provided PDFs. Verify against the official Rule 2A text before relying on it for calculations.",
+  "metro_cities": ["Mumbai", "Delhi", "Kolkata", "Chennai"],
+  "metro_exemption_pct_of_basic_salary": 50,
+  "non_metro_exemption_pct_of_basic_salary": 40,
+  "exemption_formula": "least of: (a) actual HRA received, (b) rent paid minus 10% of (basic salary + DA), (c) 50% of (basic salary + DA) for metro cities or 40% for non-metro cities"
+}
