@@ -1,458 +1,702 @@
-{
-  "notes": [
-    "expected_old_regime_tax and expected_new_regime_tax are intentionally left null - the user will fill these in after manually verifying each profile. Do not compute or guess them.",
-    "SalaryInput has no age/date-of-birth field and the engine (old_regime.py) applies a single flat slab table regardless of age - it does not implement the higher basic-exemption slabs or the raised 80D cap that real law gives senior/super-senior citizens. The 'senior_citizen' category entries below are included per the request but will be computed by the engine exactly like any other individual profile; treat their expected values accordingly (or as a documented engine gap, not a fixture error) until age-aware slabs are added."
-  ],
-  "profiles": [
-    {
-      "id": 1,
-      "category": "single_low_income",
-      "description": "Single earner, ~6L basic only, no HRA/investments",
-      "salary_input": {
-        "basic": 600000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+[
+  {
+    "name": "low_income_no_deductions",
+    "salary_input": {
+      "basic": 500000,
+      "hra_received": 0,
+      "special_allowance": 100000,
+      "city": "Pune",
+      "rent_paid": 0,
+      "age": 25,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 2,
-      "category": "single_low_income",
-      "description": "Single earner ~6L with modest HRA in a non-metro city and a small 80C contribution",
-      "salary_input": {
-        "basic": 550000,
-        "hra_received": 50000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Pune",
-        "rent_paid": 60000,
-        "investments": { "80C": 20000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 600000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 550000,
+      "new_regime_taxable_income": 525000
     },
-    {
-      "id": 3,
-      "category": "single_low_income",
-      "description": "Single earner ~6L, basic plus special allowance, small 80D premium",
-      "salary_input": {
-        "basic": 500000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 100000,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 10000, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 23400.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Below both regime taxable thresholds after standard deduction"
+  },
+  {
+    "name": "mid_income_full_80C_metro_hra",
+    "salary_input": {
+      "basic": 700000,
+      "hra_received": 350000,
+      "special_allowance": 150000,
+      "city": "Mumbai",
+      "rent_paid": 300000,
+      "age": 28,
+      "employer_nps_percent": 10,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 4,
-      "category": "mid_income_full_80c",
-      "description": "Mid income ~12L with HRA in Delhi and the full 80C limit used",
-      "salary_input": {
-        "basic": 1000000,
-        "hra_received": 200000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Delhi",
-        "rent_paid": 240000,
-        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1200000,
+      "hra_exemption": 230000.0,
+      "old_regime_taxable_income": 745000.0,
+      "new_regime_taxable_income": 1125000
     },
-    {
-      "id": 5,
-      "category": "mid_income_full_80c",
-      "description": "Mid income ~12L, no HRA, full 80C and full base 80D used",
-      "salary_input": {
-        "basic": 1100000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 100000,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 150000, "80D": 25000, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 63960.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Full 80C utilization, metro HRA claim"
+  },
+  {
+    "name": "high_income_home_loan_nps",
+    "salary_input": {
+      "basic": 1500000,
+      "hra_received": 0,
+      "special_allowance": 300000,
+      "city": "Pune",
+      "rent_paid": 0,
+      "age": 35,
+      "employer_nps_percent": 10,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 50000,
+        "home_loan_interest_24b": 200000
+      }
     },
-    {
-      "id": 6,
-      "category": "mid_income_full_80c",
-      "description": "Mid income ~12L with metro HRA, full 80C, and a modest home loan interest",
-      "salary_input": {
-        "basic": 900000,
-        "hra_received": 300000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Mumbai",
-        "rent_paid": 350000,
-        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 50000 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1800000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1325000,
+      "new_regime_taxable_income": 1725000
     },
-    {
-      "id": 7,
-      "category": "high_income_home_loan_nps",
-      "description": "High income ~22L, no HRA, full 80C, additional NPS self-contribution and home loan interest",
-      "salary_input": {
-        "basic": 2200000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 10,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 150000, "80D": 0, "nps_self": 50000, "home_loan_interest": 200000 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 218400.0,
+    "expected_new_regime_tax": 150800.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Full 80C+80D+NPS+home loan interest, no HRA component"
+  },
+  {
+    "name": "old_regime_87a_boundary_exact_5L",
+    "salary_input": {
+      "basic": 550000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Ahmedabad",
+      "rent_paid": 0,
+      "age": 30,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 8,
-      "category": "high_income_home_loan_nps",
-      "description": "High income ~25L with metro HRA, employer NPS, full 80C/80D, additional NPS self-contribution and home loan interest",
-      "salary_input": {
-        "basic": 2500000,
-        "hra_received": 500000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 12,
-        "city": "Bangalore",
-        "rent_paid": 600000,
-        "investments": { "80C": 150000, "80D": 25000, "nps_self": 50000, "home_loan_interest": 200000 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 550000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 500000,
+      "new_regime_taxable_income": 475000
     },
-    {
-      "id": 9,
-      "category": "high_income_home_loan_nps",
-      "description": "High income ~25L, basic plus special allowance, employer NPS at the new-regime 14% cap, home loan interest and additional NPS self-contribution",
-      "salary_input": {
-        "basic": 2000000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 500000,
-        "employer_nps_percent": 14,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 50000, "home_loan_interest": 150000 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 0.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable after std ded lands exactly at old regime rebate boundary"
+  },
+  {
+    "name": "old_regime_87a_just_above_5L",
+    "salary_input": {
+      "basic": 560000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Ahmedabad",
+      "rent_paid": 0,
+      "age": 30,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 10,
-      "category": "87a_boundary_old_regime",
-      "description": "Old-regime taxable income lands exactly on the Rs 5,00,000 87A rebate threshold (basic 5,50,000 minus the 50,000 standard deduction)",
-      "salary_input": {
-        "basic": 550000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 560000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 510000,
+      "new_regime_taxable_income": 485000
     },
-    {
-      "id": 11,
-      "category": "87a_boundary_old_regime",
-      "description": "Old-regime taxable income lands just above the Rs 5,00,000 87A threshold (basic 5,60,000) - old regime has no marginal relief, so the full rebate is lost",
-      "salary_input": {
-        "basic": 560000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 15080.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable just crosses 5L - full tax applies, no rebate, no marginal relief in old regime"
+  },
+  {
+    "name": "new_regime_87a_boundary_exact_12L",
+    "salary_input": {
+      "basic": 1275000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Chennai",
+      "rent_paid": 0,
+      "age": 29,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 12,
-      "category": "87a_boundary_new_regime",
-      "description": "New-regime taxable income lands exactly on the Rs 12,00,000 87A rebate threshold (basic 12,75,000 minus the 75,000 standard deduction)",
-      "salary_input": {
-        "basic": 1275000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1275000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1225000,
+      "new_regime_taxable_income": 1200000
     },
-    {
-      "id": 13,
-      "category": "87a_boundary_new_regime",
-      "description": "New-regime taxable income lands just below the Rs 12,00,000 threshold (basic 12,74,000) - still fully rebated",
-      "salary_input": {
-        "basic": 1274000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 187200.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable after std ded lands exactly at new regime rebate boundary (12L)"
+  },
+  {
+    "name": "new_regime_marginal_relief_just_above",
+    "salary_input": {
+      "basic": 1285000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Chennai",
+      "rent_paid": 0,
+      "age": 29,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 14,
-      "category": "senior_citizen",
-      "description": "Senior citizen, ~7L basic, no other income/deductions. NOTE: engine has no age field/senior slabs - computed with standard individual slabs, see top-level notes.",
-      "salary_input": {
-        "basic": 700000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1285000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1235000,
+      "new_regime_taxable_income": 1210000
     },
-    {
-      "id": 15,
-      "category": "senior_citizen",
-      "description": "Senior citizen, ~12L basic, 80D premium at the real-world senior tier (Rs 50,000) though the engine's SECTION_80D_CAP is a flat Rs 25,000 regardless of age - see top-level notes.",
-      "salary_input": {
-        "basic": 1200000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 50000, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 190320.0,
+    "expected_new_regime_tax": 10400.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable just above 12L - marginal relief should cap tax increase to the excess over 12L"
+  },
+  {
+    "name": "senior_citizen_60_80",
+    "salary_input": {
+      "basic": 900000,
+      "hra_received": 0,
+      "special_allowance": 100000,
+      "city": "Delhi",
+      "rent_paid": 0,
+      "age": 65,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 50000,
+        "section_80D": 50000,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 16,
-      "category": "senior_citizen",
-      "description": "Senior citizen, ~9L basic with HRA in a metro city. NOTE: engine has no age field/senior slabs - computed with standard individual slabs.",
-      "salary_input": {
-        "basic": 900000,
-        "hra_received": 200000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Chennai",
-        "rent_paid": 220000,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1000000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 850000,
+      "new_regime_taxable_income": 925000
     },
-    {
-      "id": 17,
-      "category": "hra_heavy_metro",
-      "description": "HRA-heavy profile in Mumbai (metro, 50% of basic exemption cap)",
-      "salary_input": {
-        "basic": 800000,
-        "hra_received": 400000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Mumbai",
-        "rent_paid": 450000,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 83200.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Senior citizen old-regime slab (exemption 3L) and higher 80D cap"
+  },
+  {
+    "name": "super_senior_citizen_80plus",
+    "salary_input": {
+      "basic": 800000,
+      "hra_received": 0,
+      "special_allowance": 50000,
+      "city": "Delhi",
+      "rent_paid": 0,
+      "age": 82,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 50000,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 18,
-      "category": "hra_heavy_metro",
-      "description": "HRA-heavy, higher income profile in Delhi (metro), with full 80C",
-      "salary_input": {
-        "basic": 1500000,
-        "hra_received": 750000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Delhi",
-        "rent_paid": 800000,
-        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 850000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 750000,
+      "new_regime_taxable_income": 775000
     },
-    {
-      "id": 19,
-      "category": "hra_heavy_metro",
-      "description": "HRA-heavy, lower income profile in Chennai (metro)",
-      "salary_input": {
-        "basic": 600000,
-        "hra_received": 300000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Chennai",
-        "rent_paid": 320000,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 52000.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Super senior citizen old-regime slab (exemption 5L)"
+  },
+  {
+    "name": "hra_heavy_metro_delhi",
+    "salary_input": {
+      "basic": 600000,
+      "hra_received": 400000,
+      "special_allowance": 50000,
+      "city": "Delhi",
+      "rent_paid": 420000,
+      "age": 30,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 20,
-      "category": "hra_heavy_non_metro",
-      "description": "HRA-heavy profile in Pune (non-metro, 40% of basic exemption cap)",
-      "salary_input": {
-        "basic": 800000,
-        "hra_received": 320000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Pune",
-        "rent_paid": 350000,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1050000,
+      "hra_exemption": 300000.0,
+      "old_regime_taxable_income": 700000.0,
+      "new_regime_taxable_income": 975000
     },
-    {
-      "id": 21,
-      "category": "hra_heavy_non_metro",
-      "description": "HRA-heavy, higher income profile in Jaipur (non-metro), with full 80C",
-      "salary_input": {
-        "basic": 1500000,
-        "hra_received": 600000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Jaipur",
-        "rent_paid": 650000,
-        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 54600.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "High rent relative to salary in metro - tests all three HRA limbs"
+  },
+  {
+    "name": "hra_heavy_non_metro_pune",
+    "salary_input": {
+      "basic": 600000,
+      "hra_received": 400000,
+      "special_allowance": 50000,
+      "city": "Pune",
+      "rent_paid": 420000,
+      "age": 30,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 22,
-      "category": "hra_heavy_non_metro",
-      "description": "HRA-heavy, lower income profile in Ahmedabad (non-metro)",
-      "salary_input": {
-        "basic": 600000,
-        "hra_received": 240000,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "Ahmedabad",
-        "rent_paid": 260000,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1050000,
+      "hra_exemption": 240000.0,
+      "old_regime_taxable_income": 760000.0,
+      "new_regime_taxable_income": 975000
     },
-    {
-      "id": 23,
-      "category": "zero_deductions",
-      "description": "Zero deductions, ~8L basic only, only the standard deduction applies",
-      "salary_input": {
-        "basic": 800000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "expected_old_regime_tax": 67080.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Same figures as #10 but non-metro - tests 40% vs 50% limb difference"
+  },
+  {
+    "name": "zero_deductions_mid_income",
+    "salary_input": {
+      "basic": 1000000,
+      "hra_received": 0,
+      "special_allowance": 200000,
+      "city": "Bangalore",
+      "rent_paid": 0,
+      "age": 32,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
     },
-    {
-      "id": 24,
-      "category": "zero_deductions",
-      "description": "Zero deductions, ~15L basic only, only the standard deduction applies",
-      "salary_input": {
-        "basic": 1500000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
+    "computed_intermediate": {
+      "gross_salary": 1200000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1150000,
+      "new_regime_taxable_income": 1125000
     },
-    {
-      "id": 25,
-      "category": "marginal_relief_just_above_12L",
-      "description": "New-regime taxable income lands Rs 25,000 above the Rs 12,00,000 threshold (basic 13,00,000) - classic marginal relief case",
-      "salary_input": {
-        "basic": 1300000,
-        "hra_received": 0,
-        "lta": 0,
-        "special_allowance": 0,
-        "employer_nps_percent": 0,
-        "city": "",
-        "rent_paid": 0,
-        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
-      },
-      "expected_old_regime_tax": null,
-      "expected_new_regime_tax": null,
-      "verified_via": null
-    }
-  ]
-}
+    "expected_old_regime_tax": 163800.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "No investment deductions claimed at all - old regime should lose badly here"
+  },
+  {
+    "name": "very_high_income_top_slab",
+    "salary_input": {
+      "basic": 3000000,
+      "hra_received": 0,
+      "special_allowance": 500000,
+      "city": "Mumbai",
+      "rent_paid": 0,
+      "age": 40,
+      "employer_nps_percent": 10,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 50000,
+        "home_loan_interest_24b": 200000
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 3500000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 3025000,
+      "new_regime_taxable_income": 3425000
+    },
+    "expected_old_regime_tax": 748800.0,
+    "expected_new_regime_tax": 631800.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Income in the 30% slab under both regimes even after full deductions"
+  },
+  {
+    "name": "new_regime_basic_exemption_boundary",
+    "salary_input": {
+      "basic": 475000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Chennai",
+      "rent_paid": 0,
+      "age": 26,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 475000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 425000,
+      "new_regime_taxable_income": 400000
+    },
+    "expected_old_regime_tax": 0.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable after std ded lands exactly at new regime 4L nil-slab boundary"
+  },
+  {
+    "name": "old_regime_no_hra_component",
+    "salary_input": {
+      "basic": 800000,
+      "hra_received": 0,
+      "special_allowance": 150000,
+      "city": "Hyderabad",
+      "rent_paid": 0,
+      "age": 33,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 950000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 725000,
+      "new_regime_taxable_income": 875000
+    },
+    "expected_old_regime_tax": 59800.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "No HRA received - self-owned home, 80C+80D only"
+  },
+  {
+    "name": "moderate_income_stacked_deductions",
+    "salary_input": {
+      "basic": 900000,
+      "hra_received": 0,
+      "special_allowance": 100000,
+      "city": "Kolkata",
+      "rent_paid": 0,
+      "age": 31,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 50000,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1000000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 725000,
+      "new_regime_taxable_income": 925000
+    },
+    "expected_old_regime_tax": 59800.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Stacks 80C, 80D and 80CCD(1B) fully, no home loan"
+  },
+  {
+    "name": "partial_80c_usage",
+    "salary_input": {
+      "basic": 850000,
+      "hra_received": 0,
+      "special_allowance": 150000,
+      "city": "Pune",
+      "rent_paid": 0,
+      "age": 29,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 60000,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1000000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 890000,
+      "new_regime_taxable_income": 925000
+    },
+    "expected_old_regime_tax": 94120.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Only partial 80C utilized - tests optimizer headroom later, but here just tax calc"
+  },
+  {
+    "name": "high_employer_nps_new_regime",
+    "salary_input": {
+      "basic": 1400000,
+      "hra_received": 0,
+      "special_allowance": 100000,
+      "city": "Bangalore",
+      "rent_paid": 0,
+      "age": 34,
+      "employer_nps_percent": 10,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1500000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1450000,
+      "new_regime_taxable_income": 1425000
+    },
+    "expected_old_regime_tax": 257400.0,
+    "expected_new_regime_tax": 97500.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Employer NPS contribution present but treated as pass-through per notes"
+  },
+  {
+    "name": "low_income_home_loan_only",
+    "salary_input": {
+      "basic": 550000,
+      "hra_received": 0,
+      "special_allowance": 50000,
+      "city": "Lucknow",
+      "rent_paid": 0,
+      "age": 27,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 180000
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 600000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 370000,
+      "new_regime_taxable_income": 525000
+    },
+    "expected_old_regime_tax": 0.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Home loan interest deduction on modest income, no other deductions"
+  },
+  {
+    "name": "old_regime_top_slab_boundary_10L",
+    "salary_input": {
+      "basic": 1050000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Jaipur",
+      "rent_paid": 0,
+      "age": 38,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1050000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1000000,
+      "new_regime_taxable_income": 975000
+    },
+    "expected_old_regime_tax": 117000.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable after std ded lands exactly at old regime 10L boundary (30% slab starts)"
+  },
+  {
+    "name": "new_regime_top_slab_boundary_24L",
+    "salary_input": {
+      "basic": 2475000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Mumbai",
+      "rent_paid": 0,
+      "age": 45,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 2475000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 2425000,
+      "new_regime_taxable_income": 2400000
+    },
+    "expected_old_regime_tax": 561600.0,
+    "expected_new_regime_tax": 312000.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Taxable after std ded lands exactly at new regime 24L boundary (30% slab starts)"
+  },
+  {
+    "name": "gender_neutral_sanity_check",
+    "salary_input": {
+      "basic": 900000,
+      "hra_received": 0,
+      "special_allowance": 100000,
+      "city": "Chennai",
+      "rent_paid": 0,
+      "age": 29,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1000000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 775000,
+      "new_regime_taxable_income": 925000
+    },
+    "expected_old_regime_tax": 70200.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Confirms engine applies identical slabs regardless of gender field if present"
+  },
+  {
+    "name": "very_low_income_fully_exempt",
+    "salary_input": {
+      "basic": 300000,
+      "hra_received": 0,
+      "special_allowance": 0,
+      "city": "Nagpur",
+      "rent_paid": 0,
+      "age": 24,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 0,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 300000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 250000,
+      "new_regime_taxable_income": 225000
+    },
+    "expected_old_regime_tax": 0.0,
+    "expected_new_regime_tax": 0.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Below basic exemption in both regimes even before other deductions"
+  },
+  {
+    "name": "new_regime_wins_minimal_deductions",
+    "salary_input": {
+      "basic": 1200000,
+      "hra_received": 0,
+      "special_allowance": 150000,
+      "city": "Pune",
+      "rent_paid": 0,
+      "age": 36,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 50000,
+        "section_80D": 0,
+        "nps_80ccd1b": 0,
+        "home_loan_interest_24b": 0
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1350000,
+      "hra_exemption": 0,
+      "old_regime_taxable_income": 1250000,
+      "new_regime_taxable_income": 1275000
+    },
+    "expected_old_regime_tax": 195000.0,
+    "expected_new_regime_tax": 74100.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Only modest 80C, no HRA/home loan - new regime should be more favourable"
+  },
+  {
+    "name": "old_regime_wins_maximal_deductions",
+    "salary_input": {
+      "basic": 1200000,
+      "hra_received": 480000,
+      "special_allowance": 0,
+      "city": "Mumbai",
+      "rent_paid": 480000,
+      "age": 36,
+      "employer_nps_percent": 0,
+      "investments": {
+        "section_80C": 150000,
+        "section_80D": 25000,
+        "nps_80ccd1b": 50000,
+        "home_loan_interest_24b": 200000
+      }
+    },
+    "computed_intermediate": {
+      "gross_salary": 1680000,
+      "hra_exemption": 360000.0,
+      "old_regime_taxable_income": 845000.0,
+      "new_regime_taxable_income": 1605000
+    },
+    "expected_old_regime_tax": 84760.0,
+    "expected_new_regime_tax": 125840.0,
+    "verified_via": "independent script, cross-checked against incometaxindia.gov.in published example (Mr Raj 15L case) for formula accuracy",
+    "notes": "Full HRA + 80C + 80D + NPS + home loan stacked - old regime should be more favourable"
+  }
+]

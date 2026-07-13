@@ -22,6 +22,7 @@ class SalaryInput(BaseModel):
     employer_nps_percent: float = Field(default=0, ge=0, le=100)
     city: str = ""
     rent_paid: float = Field(default=0, ge=0)
+    age: int = Field(default=30, ge=0, le=120)
     investments: Investments = Field(default_factory=Investments)
 
     @model_validator(mode="after")
