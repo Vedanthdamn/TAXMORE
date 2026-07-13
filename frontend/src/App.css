@@ -1,0 +1,95 @@
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.app h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.tagline {
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+/* Shared status banner */
+
+.status-banner {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.status-banner--loading {
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.status-banner--error {
+  background: var(--error-bg);
+  color: var(--error);
+}
+
+/* Salary form */
+
+.salary-form fieldset {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px 20px;
+  margin: 0 0 20px;
+}
+
+.salary-form legend {
+  font-weight: 600;
+  color: var(--text-h);
+  padding: 0 6px;
+}
+
+.salary-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.salary-form label:last-child {
+  margin-bottom: 0;
+}
+
+.salary-form input,
+.salary-form select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.salary-form button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.salary-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.raw-result {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+  overflow-x: auto;
+  font-size: 13px;
+}
