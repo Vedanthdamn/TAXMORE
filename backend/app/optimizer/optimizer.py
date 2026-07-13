@@ -21,6 +21,8 @@ under the new regime, so the optimizer short-circuits to a zero
 allocation there rather than running the LP.
 """
 
+from typing import Literal
+
 from pulp import PULP_CBC_CMD, LpMaximize, LpProblem, LpVariable, value
 from pydantic import BaseModel, Field
 
@@ -31,7 +33,7 @@ NPS_80CCD1B_STATUTORY_CAP = 50000
 
 class OptimizerInput(BaseModel):
     income: float = Field(ge=0, description="taxable income used to derive the marginal rate")
-    regime: str = Field(description='"old" or "new"')
+    regime: Literal["old", "new"]
     headroom_80c: float = Field(ge=0, le=150000, description="remaining room in the combined 80C cap")
     headroom_80d: float = Field(ge=0, description="remaining room in the applicable 80D tier")
     headroom_80ccd1b: float = Field(
