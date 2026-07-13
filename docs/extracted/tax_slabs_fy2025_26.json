@@ -31,7 +31,7 @@
     }
   },
   "old_regime": {
-    "slabs_source_note": "NOT found in either source PDF (see unresolved list from the extraction task). Filled in from general public knowledge of the well-established FY2025-26 old-regime individual slabs at the user's explicit request. Verify against an authoritative source before relying on this beyond a working prototype.",
+    "source": "Verified against Income Tax Department (incometaxindia.gov.in) published FY 2025-26 rates: old regime slabs 0-2.5L nil, 2.5-5L 5%, 5-10L 20%, above 10L 30%; cess 4% on income tax plus surcharge, applicable to both regimes.",
     "slabs": [
       { "up_to": 250000, "rate_pct": 0 },
       { "from": 250001, "up_to": 500000, "rate_pct": 5 },
@@ -52,7 +52,7 @@
   "cess": {
     "rate_pct": 4,
     "applies_to": "tax_before_cess (after rebate/marginal relief), same rate for both regimes",
-    "source": "NOT from the source PDFs - old_regime.slabs and this cess rate are the well-known FY2025-26 Health and Education Cess figure and old-regime individual slabs, filled in from general public knowledge at the user's explicit request since neither PDF states them. Verify against an authoritative source (e.g. the actual annual Finance Act's First Schedule) before relying on this for anything beyond a working prototype."
+    "source": "Verified against Income Tax Department (incometaxindia.gov.in) published FY 2025-26 rates: old regime slabs 0-2.5L nil, 2.5-5L 5%, 5-10L 20%, above 10L 30%; cess 4% on income tax plus surcharge, applicable to both regimes."
   },
   "unresolved": [
     "Surcharge rates/thresholds for individuals are not present in either PDF, and are not implemented in the engine.",

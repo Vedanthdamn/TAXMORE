@@ -31,13 +31,17 @@ a figure, its corresponding section number is noted in Eligibility notes.
 | 80TTB | Interest on deposits (senior citizens) | Rs. 50,000 | Yes | No | Actual interest income or Rs. 50,000, whichever is less | Covers both savings and time deposits, for individuals aged 60+; supersedes 80TTA for senior citizens |
 | 80U | Deduction for a person with disability | Rs. 75,000 (disability); Rs. 1,25,000 (severe disability) | Yes | No | Flat deduction, requires medical authority certification | Claimed by the disabled individual themselves (contrast with 80DD, claimed by a family member on behalf of a dependant) |
 
+## Resolved
+
+- **Old-regime slab table** and **Health and Education Cess rate** are not present in either source PDF (the
+  1961 Act text never carries rate schedules - those live in the annual Finance Act's First Schedule - and
+  `finance_act_2025_slabs_circular.pdf` only contains the new-regime table under section 202). Verified
+  against Income Tax Department (incometaxindia.gov.in) published FY 2025-26 rates: old regime slabs 0-2.5L
+  nil, 2.5-5L 5%, 5-10L 20%, above 10L 30%; cess 4% on income tax plus surcharge, applicable to both regimes.
+  See `tax_slabs_fy2025_26.json`'s `old_regime.source` and `cess.source` fields.
+
 ## Unresolved / not found in source PDFs
 
-- **Old-regime slab table** for individuals is not present in either PDF. The 1961 Act text never carries
-  rate schedules (those live in the annual Finance Act's First Schedule); `finance_act_2025_slabs_circular.pdf`
-  only contains the new-regime table (section 202). Do not assume the commonly cited 2.5L/5L/10L old-regime
-  brackets without an authoritative source.
-- **Health and Education Cess rate** is not stated in either PDF.
 - **Surcharge** rates/thresholds for individuals are not present in either PDF.
 - **80CCD(2) government-employer rate discrepancy**: `income_tax_act_1961_relevant_section.pdf`'s text of
   section 80CCD(2) states a flat 10% of salary with no separate rate for Government employers, while
