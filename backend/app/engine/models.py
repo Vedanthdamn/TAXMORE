@@ -1,8 +1,11 @@
 import re
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 _CITY_NAME_PATTERN = re.compile(r"[A-Za-z ,.'-]+")
+
+ANNUALIZED_FIELDS = ("basic", "hra_received", "special_allowance", "rent_paid")
 
 
 class Investments(BaseModel):
@@ -23,6 +26,7 @@ class SalaryInput(BaseModel):
     city: str = ""
     rent_paid: float = Field(default=0, ge=0)
     age: int = Field(default=30, ge=0, le=120)
+    input_frequency: Literal["monthly", "annual"] = "annual"
     investments: Investments = Field(default_factory=Investments)
 
     @model_validator(mode="after")
@@ -43,6 +47,26 @@ class SalaryInput(BaseModel):
             raise ValueError("city must contain only letters, spaces, and punctuation")
 
         return self
+
+
+def annualize_input(salary: SalaryInput) -> SalaryInput:
+    """Convert a monthly SalaryInput to its annual equivalent.
+
+    Tax is always computed annually, so this is the one place monthly
+    figures get multiplied by 12 - old_regime.py/new_regime.py never see
+    input_frequency and always operate on annual numbers. Only the
+    recurring salary components (basic, HRA, special allowance, rent
+    paid) are scaled; investments, LTA, and employer_nps_percent are
+    already annual/lump-sum figures regardless of how the salary itself
+    is entered, so they're left untouched. Annual input is returned
+    unchanged.
+    """
+    if salary.input_frequency == "annual":
+        return salary
+
+    updates = {field: getattr(salary, field) * 12 for field in ANNUALIZED_FIELDS}
+    updates["input_frequency"] = "annual"
+    return salary.model_copy(update=updates)
 
 
 class TaxResult(BaseModel):
