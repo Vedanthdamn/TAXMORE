@@ -31,7 +31,13 @@
     }
   },
   "old_regime": {
-    "slabs": null,
+    "slabs_source_note": "NOT found in either source PDF (see unresolved list from the extraction task). Filled in from general public knowledge of the well-established FY2025-26 old-regime individual slabs at the user's explicit request. Verify against an authoritative source before relying on this beyond a working prototype.",
+    "slabs": [
+      { "up_to": 250000, "rate_pct": 0 },
+      { "from": 250001, "up_to": 500000, "rate_pct": 5 },
+      { "from": 500001, "up_to": 1000000, "rate_pct": 20 },
+      { "from": 1000001, "up_to": null, "rate_pct": 30 }
+    ],
     "standard_deduction": {
       "amount": 50000,
       "rule": "Rs. 50,000 or the salary, whichever is less, in any case other than new-regime computation"
@@ -43,11 +49,13 @@
       "marginal_relief": null
     }
   },
-  "cess": null,
+  "cess": {
+    "rate_pct": 4,
+    "applies_to": "tax_before_cess (after rebate/marginal relief), same rate for both regimes",
+    "source": "NOT from the source PDFs - old_regime.slabs and this cess rate are the well-known FY2025-26 Health and Education Cess figure and old-regime individual slabs, filled in from general public knowledge at the user's explicit request since neither PDF states them. Verify against an authoritative source (e.g. the actual annual Finance Act's First Schedule) before relying on this for anything beyond a working prototype."
+  },
   "unresolved": [
-    "Old-regime slab table (the income brackets/rates for individuals who do NOT opt into the new regime) is not present in either source PDF. income_tax_act_1961_relevant_section.pdf never carries rate schedules (rates are always fixed by the annual Finance Act's First Schedule, not the Act itself), and finance_act_2025_slabs_circular.pdf only contains the new-regime table under section 202. Do not assume the commonly-cited 2.5L/5L/10L old-regime slabs without an authoritative source.",
-    "Health and Education Cess rate is not stated anywhere in either PDF (search for 'cess' only turns up unrelated definitions of 'maximum marginal rate' and generic references to 'tax, duty, cess or fee'). Do not hardcode 4% without confirming against a source.",
-    "Surcharge rates/thresholds for individuals are not present in either PDF.",
+    "Surcharge rates/thresholds for individuals are not present in either PDF, and are not implemented in the engine.",
     "finance_act_2025_slabs_circular.pdf is not literally a 'circular' - its section numbering (199-209, Chapter references, footnotes citing 'Finance Act, 2026, w.e.f. 1-4-2026') indicates it is full or near-full text of the new Income-tax Act, 2025, which restructures section numbers relative to the 1961 Act. The FY2025-26 applicability of this specific numbering should be verified against the Act's actual commencement provisions before relying on section citations (155/156/202/etc.) in user-facing content."
   ]
 }
