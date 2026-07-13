@@ -1,4 +1,8 @@
-from pydantic import BaseModel, ConfigDict, Field
+import re
+
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+_CITY_NAME_PATTERN = re.compile(r"[A-Za-z ,.'-]+")
 
 
 class Investments(BaseModel):
@@ -19,6 +23,25 @@ class SalaryInput(BaseModel):
     city: str = ""
     rent_paid: float = Field(default=0, ge=0)
     investments: Investments = Field(default_factory=Investments)
+
+    @model_validator(mode="after")
+    def _validate_cross_fields(self):
+        total_cash_salary = (
+            self.basic + self.hra_received + self.lta + self.special_allowance
+        )
+        if self.rent_paid > total_cash_salary:
+            raise ValueError(
+                "rent_paid cannot exceed total salary "
+                "(basic + HRA + LTA + special allowance)"
+            )
+
+        city = self.city.strip()
+        if self.hra_received > 0 and not city:
+            raise ValueError("city is required when hra_received is greater than 0")
+        if city and not _CITY_NAME_PATTERN.fullmatch(city):
+            raise ValueError("city must contain only letters, spaces, and punctuation")
+
+        return self
 
 
 class TaxResult(BaseModel):
