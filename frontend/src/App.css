@@ -156,3 +156,34 @@
   border-top: 1px solid var(--border);
   font-size: 15px;
 }
+
+/* Optimizer panel */
+
+.optimizer-panel {
+  margin-top: 32px;
+}
+
+.allocation-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.allocation-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 16px;
+}
+
+.allocation-list li:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+
+.optimizer-panel__reasoning {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 12px;
+}

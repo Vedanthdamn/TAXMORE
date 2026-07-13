@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { ApiError, calculateTax } from "./api";
 import { ComparisonView } from "./components/ComparisonView";
+import { OptimizerPanel } from "./components/OptimizerPanel";
 import { SalaryForm } from "./components/SalaryForm";
 import { StatusBanner } from "./components/StatusBanner";
-import type { RegimeComparison, SalaryInput } from "./types";
+import type { Investments, RegimeComparison, SalaryInput } from "./types";
 import "./App.css";
 
 function App() {
   const [comparison, setComparison] = useState<RegimeComparison | null>(null);
+  const [investments, setInvestments] = useState<Investments | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,6 +19,7 @@ function App() {
     try {
       const result = await calculateTax(salary);
       setComparison(result);
+      setInvestments(salary.investments);
     } catch (err) {
       setComparison(null);
       setError(err instanceof ApiError ? err.message : "Something went wrong.");
@@ -34,7 +37,14 @@ function App() {
 
       <StatusBanner loading={loading} loadingText="Comparing regimes..." error={error} />
 
-      {comparison && !loading && !error && <ComparisonView comparison={comparison} />}
+      {comparison && !loading && !error && (
+        <>
+          <ComparisonView comparison={comparison} />
+          {investments && (
+            <OptimizerPanel comparison={comparison} investments={investments} />
+          )}
+        </>
+      )}
     </main>
   );
 }
