@@ -1,0 +1,458 @@
+{
+  "notes": [
+    "expected_old_regime_tax and expected_new_regime_tax are intentionally left null - the user will fill these in after manually verifying each profile. Do not compute or guess them.",
+    "SalaryInput has no age/date-of-birth field and the engine (old_regime.py) applies a single flat slab table regardless of age - it does not implement the higher basic-exemption slabs or the raised 80D cap that real law gives senior/super-senior citizens. The 'senior_citizen' category entries below are included per the request but will be computed by the engine exactly like any other individual profile; treat their expected values accordingly (or as a documented engine gap, not a fixture error) until age-aware slabs are added."
+  ],
+  "profiles": [
+    {
+      "id": 1,
+      "category": "single_low_income",
+      "description": "Single earner, ~6L basic only, no HRA/investments",
+      "salary_input": {
+        "basic": 600000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 2,
+      "category": "single_low_income",
+      "description": "Single earner ~6L with modest HRA in a non-metro city and a small 80C contribution",
+      "salary_input": {
+        "basic": 550000,
+        "hra_received": 50000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Pune",
+        "rent_paid": 60000,
+        "investments": { "80C": 20000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 3,
+      "category": "single_low_income",
+      "description": "Single earner ~6L, basic plus special allowance, small 80D premium",
+      "salary_input": {
+        "basic": 500000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 100000,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 10000, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 4,
+      "category": "mid_income_full_80c",
+      "description": "Mid income ~12L with HRA in Delhi and the full 80C limit used",
+      "salary_input": {
+        "basic": 1000000,
+        "hra_received": 200000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Delhi",
+        "rent_paid": 240000,
+        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 5,
+      "category": "mid_income_full_80c",
+      "description": "Mid income ~12L, no HRA, full 80C and full base 80D used",
+      "salary_input": {
+        "basic": 1100000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 100000,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 150000, "80D": 25000, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 6,
+      "category": "mid_income_full_80c",
+      "description": "Mid income ~12L with metro HRA, full 80C, and a modest home loan interest",
+      "salary_input": {
+        "basic": 900000,
+        "hra_received": 300000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Mumbai",
+        "rent_paid": 350000,
+        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 50000 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 7,
+      "category": "high_income_home_loan_nps",
+      "description": "High income ~22L, no HRA, full 80C, additional NPS self-contribution and home loan interest",
+      "salary_input": {
+        "basic": 2200000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 10,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 150000, "80D": 0, "nps_self": 50000, "home_loan_interest": 200000 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 8,
+      "category": "high_income_home_loan_nps",
+      "description": "High income ~25L with metro HRA, employer NPS, full 80C/80D, additional NPS self-contribution and home loan interest",
+      "salary_input": {
+        "basic": 2500000,
+        "hra_received": 500000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 12,
+        "city": "Bangalore",
+        "rent_paid": 600000,
+        "investments": { "80C": 150000, "80D": 25000, "nps_self": 50000, "home_loan_interest": 200000 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 9,
+      "category": "high_income_home_loan_nps",
+      "description": "High income ~25L, basic plus special allowance, employer NPS at the new-regime 14% cap, home loan interest and additional NPS self-contribution",
+      "salary_input": {
+        "basic": 2000000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 500000,
+        "employer_nps_percent": 14,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 50000, "home_loan_interest": 150000 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 10,
+      "category": "87a_boundary_old_regime",
+      "description": "Old-regime taxable income lands exactly on the Rs 5,00,000 87A rebate threshold (basic 5,50,000 minus the 50,000 standard deduction)",
+      "salary_input": {
+        "basic": 550000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 11,
+      "category": "87a_boundary_old_regime",
+      "description": "Old-regime taxable income lands just above the Rs 5,00,000 87A threshold (basic 5,60,000) - old regime has no marginal relief, so the full rebate is lost",
+      "salary_input": {
+        "basic": 560000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 12,
+      "category": "87a_boundary_new_regime",
+      "description": "New-regime taxable income lands exactly on the Rs 12,00,000 87A rebate threshold (basic 12,75,000 minus the 75,000 standard deduction)",
+      "salary_input": {
+        "basic": 1275000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 13,
+      "category": "87a_boundary_new_regime",
+      "description": "New-regime taxable income lands just below the Rs 12,00,000 threshold (basic 12,74,000) - still fully rebated",
+      "salary_input": {
+        "basic": 1274000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 14,
+      "category": "senior_citizen",
+      "description": "Senior citizen, ~7L basic, no other income/deductions. NOTE: engine has no age field/senior slabs - computed with standard individual slabs, see top-level notes.",
+      "salary_input": {
+        "basic": 700000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 15,
+      "category": "senior_citizen",
+      "description": "Senior citizen, ~12L basic, 80D premium at the real-world senior tier (Rs 50,000) though the engine's SECTION_80D_CAP is a flat Rs 25,000 regardless of age - see top-level notes.",
+      "salary_input": {
+        "basic": 1200000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 50000, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 16,
+      "category": "senior_citizen",
+      "description": "Senior citizen, ~9L basic with HRA in a metro city. NOTE: engine has no age field/senior slabs - computed with standard individual slabs.",
+      "salary_input": {
+        "basic": 900000,
+        "hra_received": 200000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Chennai",
+        "rent_paid": 220000,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 17,
+      "category": "hra_heavy_metro",
+      "description": "HRA-heavy profile in Mumbai (metro, 50% of basic exemption cap)",
+      "salary_input": {
+        "basic": 800000,
+        "hra_received": 400000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Mumbai",
+        "rent_paid": 450000,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 18,
+      "category": "hra_heavy_metro",
+      "description": "HRA-heavy, higher income profile in Delhi (metro), with full 80C",
+      "salary_input": {
+        "basic": 1500000,
+        "hra_received": 750000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Delhi",
+        "rent_paid": 800000,
+        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 19,
+      "category": "hra_heavy_metro",
+      "description": "HRA-heavy, lower income profile in Chennai (metro)",
+      "salary_input": {
+        "basic": 600000,
+        "hra_received": 300000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Chennai",
+        "rent_paid": 320000,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 20,
+      "category": "hra_heavy_non_metro",
+      "description": "HRA-heavy profile in Pune (non-metro, 40% of basic exemption cap)",
+      "salary_input": {
+        "basic": 800000,
+        "hra_received": 320000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Pune",
+        "rent_paid": 350000,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 21,
+      "category": "hra_heavy_non_metro",
+      "description": "HRA-heavy, higher income profile in Jaipur (non-metro), with full 80C",
+      "salary_input": {
+        "basic": 1500000,
+        "hra_received": 600000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Jaipur",
+        "rent_paid": 650000,
+        "investments": { "80C": 150000, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 22,
+      "category": "hra_heavy_non_metro",
+      "description": "HRA-heavy, lower income profile in Ahmedabad (non-metro)",
+      "salary_input": {
+        "basic": 600000,
+        "hra_received": 240000,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "Ahmedabad",
+        "rent_paid": 260000,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 23,
+      "category": "zero_deductions",
+      "description": "Zero deductions, ~8L basic only, only the standard deduction applies",
+      "salary_input": {
+        "basic": 800000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 24,
+      "category": "zero_deductions",
+      "description": "Zero deductions, ~15L basic only, only the standard deduction applies",
+      "salary_input": {
+        "basic": 1500000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    },
+    {
+      "id": 25,
+      "category": "marginal_relief_just_above_12L",
+      "description": "New-regime taxable income lands Rs 25,000 above the Rs 12,00,000 threshold (basic 13,00,000) - classic marginal relief case",
+      "salary_input": {
+        "basic": 1300000,
+        "hra_received": 0,
+        "lta": 0,
+        "special_allowance": 0,
+        "employer_nps_percent": 0,
+        "city": "",
+        "rent_paid": 0,
+        "investments": { "80C": 0, "80D": 0, "nps_self": 0, "home_loan_interest": 0 }
+      },
+      "expected_old_regime_tax": null,
+      "expected_new_regime_tax": null,
+      "verified_via": null
+    }
+  ]
+}
