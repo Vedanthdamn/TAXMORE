@@ -69,6 +69,31 @@
   color: var(--text-h);
 }
 
+.frequency-toggle {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.frequency-toggle label {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0;
+}
+
+.frequency-toggle input {
+  width: auto;
+  padding: 0;
+  border: none;
+}
+
+.fieldset-note {
+  font-size: 13px;
+  color: var(--text);
+  margin: -4px 0 14px;
+}
+
 .salary-form button {
   width: 100%;
   padding: 12px;
@@ -155,6 +180,11 @@
   padding-top: 12px;
   border-top: 1px solid var(--border);
   font-size: 15px;
+}
+
+.regime-card__monthly {
+  font-size: 13px;
+  color: var(--text);
 }
 
 /* Optimizer panel */

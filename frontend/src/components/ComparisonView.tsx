@@ -21,7 +21,15 @@ function formatDeductionLabel(key: string): string {
     .join(" ");
 }
 
-function RegimeCard({ label, result }: { label: string; result: TaxResult }) {
+function RegimeCard({
+  label,
+  result,
+  monthlyTax,
+}: {
+  label: string;
+  result: TaxResult;
+  monthlyTax: number;
+}) {
   const deductions = Object.entries(result.deductions_breakdown).filter(
     ([, amount]) => amount > 0,
   );
@@ -59,13 +67,17 @@ function RegimeCard({ label, result }: { label: string; result: TaxResult }) {
 
       <p className="regime-card__total">
         Total tax: <strong>{formatCurrency(result.total_tax)}</strong>
+        <br />
+        <span className="regime-card__monthly">
+          approx {formatCurrency(monthlyTax)} per month
+        </span>
       </p>
     </div>
   );
 }
 
 export function ComparisonView({ comparison }: ComparisonViewProps) {
-  const { old_regime, new_regime, better_regime, savings } = comparison;
+  const { old_regime, new_regime, better_regime, savings, monthly_tax } = comparison;
 
   return (
     <section className="comparison-view">
@@ -81,8 +93,16 @@ export function ComparisonView({ comparison }: ComparisonViewProps) {
       )}
 
       <div className="regime-grid">
-        <RegimeCard label="Old regime" result={old_regime} />
-        <RegimeCard label="New regime" result={new_regime} />
+        <RegimeCard
+          label="Old regime"
+          result={old_regime}
+          monthlyTax={monthly_tax.old_regime}
+        />
+        <RegimeCard
+          label="New regime"
+          result={new_regime}
+          monthlyTax={monthly_tax.new_regime}
+        />
       </div>
     </section>
   );

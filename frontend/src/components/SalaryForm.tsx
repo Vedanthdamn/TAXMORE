@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { CITY_OPTIONS, OTHER_CITY_OPTION } from "../data/hraCities";
-import type { SalaryInput } from "../types";
+import type { InputFrequency, SalaryInput } from "../types";
 
 interface SalaryFormProps {
   onSubmit: (salary: SalaryInput) => void;
@@ -9,6 +9,7 @@ interface SalaryFormProps {
 }
 
 interface FormState {
+  inputFrequency: InputFrequency;
   basic: string;
   hraReceived: string;
   lta: string;
@@ -24,6 +25,7 @@ interface FormState {
 }
 
 const initialState: FormState = {
+  inputFrequency: "annual",
   basic: "",
   hraReceived: "",
   lta: "",
@@ -64,6 +66,7 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
       employer_nps_percent: toNumber(form.employerNpsPercent),
       city,
       rent_paid: toNumber(form.rentPaid),
+      input_frequency: form.inputFrequency,
       investments: {
         "80C": toNumber(form.section80C),
         "80D": toNumber(form.section80D),
@@ -75,13 +78,38 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
     onSubmit(salary);
   }
 
+  const period = form.inputFrequency === "monthly" ? "monthly" : "annual";
+
   return (
     <form className="salary-form" onSubmit={handleSubmit}>
       <fieldset>
         <legend>Salary</legend>
 
+        <div className="frequency-toggle" role="radiogroup" aria-label="Salary input frequency">
+          <label>
+            <input
+              type="radio"
+              name="inputFrequency"
+              value="annual"
+              checked={form.inputFrequency === "annual"}
+              onChange={() => update("inputFrequency", "annual")}
+            />
+            Annual
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="inputFrequency"
+              value="monthly"
+              checked={form.inputFrequency === "monthly"}
+              onChange={() => update("inputFrequency", "monthly")}
+            />
+            Monthly
+          </label>
+        </div>
+
         <label>
-          Basic salary (annual)
+          Basic salary ({period})
           <input
             type="number"
             min="0"
@@ -92,7 +120,7 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
         </label>
 
         <label>
-          HRA received (annual)
+          HRA received ({period})
           <input
             type="number"
             min="0"
@@ -112,7 +140,7 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
         </label>
 
         <label>
-          Special allowance (annual)
+          Special allowance ({period})
           <input
             type="number"
             min="0"
@@ -164,7 +192,7 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
         )}
 
         <label>
-          Rent paid (annual)
+          Rent paid ({period})
           <input
             type="number"
             min="0"
@@ -176,6 +204,11 @@ export function SalaryForm({ onSubmit, loading }: SalaryFormProps) {
 
       <fieldset>
         <legend>Investment declarations</legend>
+        <p className="fieldset-note">
+          Always entered as yearly amounts, even if your salary above is
+          monthly - these are typically declared once a year regardless of
+          how often you're paid.
+        </p>
 
         <label>
           Section 80C (ELSS, PPF, life insurance, etc.)

@@ -5,6 +5,8 @@ export interface Investments {
   home_loan_interest: number;
 }
 
+export type InputFrequency = "monthly" | "annual";
+
 export interface SalaryInput {
   basic: number;
   hra_received: number;
@@ -13,6 +15,7 @@ export interface SalaryInput {
   employer_nps_percent: number;
   city: string;
   rent_paid: number;
+  input_frequency: InputFrequency;
   investments: Investments;
 }
 
@@ -31,6 +34,9 @@ export interface RegimeComparison {
   new_regime: TaxResult;
   better_regime: string;
   savings: number;
+  input_frequency: InputFrequency;
+  annualized_salary: Record<string, number>;
+  monthly_tax: Record<string, number>;
 }
 
 export interface OptimizerInput {
